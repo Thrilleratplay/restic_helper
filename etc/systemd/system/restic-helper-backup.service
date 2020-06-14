@@ -1,0 +1,13 @@
+[Unit]
+Description=Backup with restic
+
+[Service]
+Type=simple
+Restart=always
+Nice=10
+ExecStart=/usr/local/sbin/restic_helper_backup.sh
+# $HOME or $XDG_CACHE_HOME must be set for restic to find /root/.cache/restic/
+Environment="HOME=/root"
+
+[Install]
+Alias=restic-helper-backup.service
