@@ -4,7 +4,7 @@ Conflicts=restic_helper_backup.service
 
 [Service]
 Type=simple
-Restart=always
+# Restart=always
 Nice=10
 ExecStart=/usr/local/sbin/restic_helper_check.sh
 

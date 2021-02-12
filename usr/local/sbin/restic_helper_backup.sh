@@ -34,7 +34,6 @@ restic_wrapper "backup --one-file-system $TAG_PARAM $BACKUP_EXCLUDES_PARAM $BACK
 # --group-by only the tag and path, and not by hostname. This is because I create a B2 Bucket per host, and if this hostname accidentially change some time, there would now be multiple backup sets.
 restic_wrapper "forget $TAG_PARAM \
               --prune \
-              --group-by 'paths,tags' \
               --keep-last $KEEP_LIMIT \
               --keep-daily $RETENTION_DAYS \
               --keep-weekly $RETENTION_WEEKS \

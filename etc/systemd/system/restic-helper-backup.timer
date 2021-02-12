@@ -2,7 +2,8 @@
 Description=Backup with restic on schedule
 
 [Timer]
-OnCalendar=daily
+# OnCalendar=daily
+OnCalendar=*-*-* 4:00:00
 Persistent=true
 
 [Install]

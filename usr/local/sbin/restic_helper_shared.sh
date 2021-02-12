@@ -22,11 +22,14 @@ exit_hook() {
 # Stanardize Restic command call and error handling
 restic_wrapper() {
   RESTIC_CMD="restic $REMOTE_HOST_PARAM $PASS_FILE_PARAM $1"
-  ERROR=$( { GOMAXPROCS=$MAX_PROCESSES $RESTIC_CMD & } 2>&1 )
+  SUMMARY=$( { GOMAXPROCS=$MAX_PROCESSES $RESTIC_CMD & } 2>&1 )
   wait $!
 
-  if [ -n "$ERROR" ] && [ "$1" != "unlock" ]; then
-    notify-send-all-users.sh 'Restic backup error' "$ERROR" --icon=dialog-warning
+  # shellcheck disable=SC2181
+  if [ $? != 0 ] && [ "$1" != "unlock" ]; then
+    notify-send-all-users.sh 'Restic backup error' "$SUMMARY" --icon=dialog-warning -u critical -t 0
     exit 1;
+  elif [ "$1" != "unlock" ]; then
+    notify-send-all-users.sh 'Restic backup summary' "$SUMMARY" --icon=dialog-information -u critical -t 0
   fi
 }
